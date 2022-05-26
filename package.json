@@ -1,0 +1,23 @@
+{
+  "name": "walkthroughlibrary",
+  "version": "1.0.0",
+  "description": "A JavaScript library to create product walkthroughs.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sruthi-98/WalkthroughLibrary.git"
+  },
+  "keywords": [
+    "walkthrough",
+    "JavaScript"
+  ],
+  "author": "Sruthi Suresh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sruthi-98/WalkthroughLibrary/issues"
+  },
+  "homepage": "https://github.com/sruthi-98/WalkthroughLibrary#readme"
+}

@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+/*  Popper  */
+
+.popper {
+  --clr-primary: hsl(214, 34%, 13%);
+  --text-body: hsla(0, 0%, 0%, 0.75);
+  --back-btn-bg: hsl(180, 12%, 81%);
+  --next-btn-hover-bg: hsl(211, 78%, 45%);
+  --border: 4px solid var(--clr-primary);
+
+  font-family: "Lato", Arial, Helvetica, sans-serif;
+  color: var(--clr-primary);
+  border: var(--border);
+  width: min(100%, 20rem);
+}
+
+.popper button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+.popper__header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.popper__title {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+button.popper__close {
+  margin-left: auto;
+  height: min-content;
+  color: var(--text-body);
+}
+
+.popper__body {
+  color: var(--text-body);
+  padding-inline: 2rem;
+  padding-block-end: 2rem;
+  font-size: 1rem;
+}
+
+.popper__footer {
+  display: flex;
+  border-top: var(--border);
+}
+
+button.popper__back,
+button.popper__next {
+  flex: 1;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  height: 2.5rem;
+  color: var(--clr-primary);
+  font-weight: 600;
+}
+
+button.popper__back {
+  border-right: var(--border);
+  background-color: var(--back-btn-bg);
+}
+
+button.popper__next {
+  transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
+}
+
+button.popper__next:hover {
+  background-color: var(--next-btn-hover-bg);
+  color: #fff;
+}
