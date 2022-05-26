@@ -1,18 +1,30 @@
 class Popper extends HTMLElement {
-  #element;
-  #body;
+  #stepIndex = 0;
+  #steps;
+
   #title;
+  #body;
+  #back;
+  #next;
 
-  constructor(title, body, element) {
+  constructor(steps) {
     super();
-    this.#element = element;
-    this.#body = body;
-    this.#title = title;
+    this.#steps = steps;
+    this.#stepIndex = 0;
 
-    this.#setup();
+    this.onClose = this.onClose.bind(this);
+    this.onBack = this.onBack.bind(this);
+    this.onNext = this.onNext.bind(this);
+
+    this.setup();
+    this.setContent();
   }
 
-  #setup() {
+  set stepIndex(index) {
+    this.#stepIndex = index;
+  }
+
+  setup() {
     const popper = document.createElement("div");
     popper.classList.add("popper");
 
@@ -21,29 +33,32 @@ class Popper extends HTMLElement {
 
     const title = document.createElement("h2");
     title.classList.add("popper__title");
-    title.textContent = this.#title;
+    this.#title = title;
 
     const close = document.createElement("button");
     close.classList.add("popper__close");
     close.innerHTML = "&#10006";
+    close.addEventListener("click", this.onClose);
 
     header.appendChild(title);
     header.appendChild(close);
 
     const body = document.createElement("p");
     body.classList.add("popper__body");
-    body.textContent = this.#body;
+    this.#body = body;
 
     const footer = document.createElement("footer");
     footer.classList.add("popper__footer");
 
     const back = document.createElement("button");
     back.classList.add("popper__back");
-    back.textContent = "Back";
+    back.addEventListener("click", this.onBack);
+    this.#back = back;
 
     const next = document.createElement("button");
     next.classList.add("popper__next");
-    next.textContent = "Next";
+    next.addEventListener("click", this.onNext);
+    this.#next = next;
 
     footer.appendChild(back);
     footer.appendChild(next);
@@ -53,6 +68,35 @@ class Popper extends HTMLElement {
     popper.appendChild(footer);
 
     this.appendChild(popper);
+  }
+
+  setContent() {
+    const currentStep = this.#steps[this.#stepIndex];
+    this.#title.textContent = currentStep.title || "";
+    this.#body.textContent = currentStep.body;
+    this.#back.textContent = this.#stepIndex === 0 ? "Exit" : "Back";
+    this.#next.textContent =
+      this.#stepIndex === this.#steps.length - 1 ? "Done" : "Next";
+  }
+
+  onClose() {
+    this.remove();
+  }
+
+  onBack() {
+    if (this.#stepIndex === 0) this.onClose();
+    else {
+      this.#stepIndex = this.#stepIndex - 1;
+      this.setContent();
+    }
+  }
+
+  onNext() {
+    if (this.#stepIndex === this.#steps.length - 1) this.onClose();
+    else {
+      this.#stepIndex = this.#stepIndex + 1;
+      this.setContent();
+    }
   }
 }
 
@@ -66,9 +110,7 @@ export default class Walkthrough {
   }
 
   start() {
-    this.#steps.forEach(({ title = "", body, element }) => {
-      const popper = new Popper(title, body, element);
-      document.body.appendChild(popper);
-    });
+    const popper = new Popper(this.#steps);
+    document.body.appendChild(popper);
   }
 }
