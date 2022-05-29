@@ -20,6 +20,7 @@ class Popper extends HTMLElement {
     this.highlightTargetElement = this.highlightTargetElement.bind(this);
     this.positionPopper = this.positionPopper.bind(this);
     this.resizeHandler = this.resizeHandler.bind(this);
+    this.keyDownHandler = this.keyDownHandler.bind(this);
 
     this.setup();
     this.setContent();
@@ -30,11 +31,13 @@ class Popper extends HTMLElement {
   connectedCallback() {
     window.addEventListener("scroll", this.positionPopper);
     window.addEventListener("resize", this.resizeHandler);
+    window.addEventListener("keydown", this.keyDownHandler);
   }
 
   disconnectedCallback() {
     window.removeEventListener("scroll", this.positionPopper);
     window.removeEventListener("resize", this.resizeHandler);
+    window.removeEventListener("keydown", this.keyDownHandler);
   }
 
   set stepIndex(index) {
@@ -43,6 +46,14 @@ class Popper extends HTMLElement {
 
   getCurrentElement() {
     return this.#steps[this.#stepIndex].element;
+  }
+
+  keyDownHandler(event) {
+    switch (event.key) {
+      case "Escape":
+        this.onClose();
+        break;
+    }
   }
 
   resizeHandler() {
